@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import ttk
 # ایجاد کردن صفحه
 window = Tk()
 title = window.title("Expense Tracker")
@@ -37,10 +37,49 @@ fram_chose = Frame(canv, background="#D5E5ED", height=180, width=430)
 canv.create_window((0, 0), window=fram_chose, anchor="nw")
 
 def new_page(text):
+
+    def Focus_in(event):
+        remind_entry.delete(0,END)
+    def focus_out(event):
+        if remind_entry.get()=="":  
+            remind_entry.insert(0,"متن مورد نظر را وارد کنید")
+
+ 
+    def add_to_checkbutton():
+        get_entry = remind_entry.get()
+        if get_entry and get_entry != "متن مورد نظر را وارد کنید":
+            Checkbutton(second_page, text=f"{get_entry}", bg="#D8EAF2").pack(side="top")
+            remind_entry.delete(0, END)  
+
+
+
     second_page=Toplevel(window)
     second_page.title(f"{text}")
     second_page.geometry("450x600")
-    label=Label(second_page,text=f"{text}",font=("B Nazanin",14)).pack(side="top",)
+    label=Label(second_page,text=f"{text}",font=("B Nazanin",14)).pack(side="top")
+    if text=="جزییات حساب":
+        columns=("data","action","plus/minus")
+        trees=ttk.Treeview(second_page,columns=columns)
+        for col in columns:
+            trees.column(col,width=100)
+        trees.heading("data",text="تاریخ")
+        trees.heading("action",text="عملیات")
+        trees.heading("plus/minus",text="بودجه")
+        s=trees.insert("",END,values=("2000/02/03","buy","-100"))
+        trees.insert(s,END,text="تاریخ اون روز",values=("12:30","buy","-100"))
+        trees.pack(pady=50)
+    elif text=="یادآور":
+        remind_entry=Entry(second_page,font=("B Nazanin",12),bg="#C3D8E6",fg="#898C8C",width=30)
+        remind_entry.insert(0,"متن مورد نظر را وارد کنید")
+        remind_entry.bind("<FocusIn>", Focus_in)
+        remind_entry.bind("<FocusOut>", focus_out)
+        remind_entry.place(x=50, y=50)
+        button_remind_entry=Button(second_page,text="apply",bg="#D8EAF2",width=4,command=add_to_checkbutton)
+        button_remind_entry.place(x=50, y=80)
+
+
+
+
 
 
 
