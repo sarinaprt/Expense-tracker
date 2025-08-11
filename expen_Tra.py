@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+import webbrowser as link
 # ایجاد کردن صفحه
 window = Tk()
 title = window.title("Expense Tracker")
@@ -48,8 +49,9 @@ def new_page(text):
     def add_to_checkbutton():
         get_entry = remind_entry.get()
         if get_entry and get_entry != "متن مورد نظر را وارد کنید":
-            Checkbutton(second_page, text=f"{get_entry}", bg="#D8EAF2").pack(side="top")
+            Checkbutton(check_fram, text=f"{get_entry}", bg="#D8EAF2").pack(side="top",)
             remind_entry.delete(0, END)  
+
 
 
 
@@ -74,9 +76,19 @@ def new_page(text):
         remind_entry.bind("<FocusIn>", Focus_in)
         remind_entry.bind("<FocusOut>", focus_out)
         remind_entry.place(x=50, y=50)
-        button_remind_entry=Button(second_page,text="apply",bg="#D8EAF2",width=4,command=add_to_checkbutton)
+        button_remind_entry=Button(second_page,text="apply",bg="#8EBCBD",width=4,command=add_to_checkbutton)
         button_remind_entry.place(x=50, y=80)
+        check_fram=Frame(second_page,bg="#ABD4E0")
+        check_fram.place(x=50, y=110)
+    elif text=="پشتیبان‌گیری":
+        Label(second_page,text="درصورت وجود مشکل میتوانید با همکاران ما ارتباط بگیرید ",font=("B Nazanin",14),bg="#8EBCBD").pack(side="top",padx=10,pady=20)
+        Label(second_page,text="098*********",font=12).pack(side="top")
+        LINK_TEL=Label(second_page,text="ارتباط با پشتیبان تلگرام",font=("Arial", 12, "underline"),cursor="hand2")
+        LINK_TEL.pack(side="top")
+        LINK_TEL.bind("<Button-1>",lambda e: open_lin() )
 
+        def open_lin():
+            link.open("https://t.me/YourTelegramID")
 
 
 
@@ -85,12 +97,9 @@ def new_page(text):
 
 # لیست دکمه‌ها
 boton = [
-    ("جزییات حساب", "💳", 1, 0), ("جزییات حساب", "💳", 1, 1), ("جزییات حساب", "💳", 1, 2),
-    ("یادآور", "⏰", 2, 0), ("پشتیبان‌گیری", "💾", 2, 1), ("نظرات", "📩", 2, 2),
-    # برای تست اسکرول بیشتر اضافه کن:
-    ("تنظیمات", "⚙️", 3, 0), ("راهنما", "📘", 3, 1), ("تماس با ما", "☎️", 3, 2),
-    ("پروفایل", "👤", 4, 0), ("خروج", "🚪", 4, 1), ("درباره ما", "ℹ️", 4, 2)
-]
+    ("تنظیمات", "⚙️", 1, 0), ("جزییات حساب", "💳", 1, 1), ("نمودار", "📈", 1, 2),
+    ("یادآور", "⏰", 2, 0), ("پشتیبان‌گیری", "💾", 2, 1),  ("پروفایل", "👤", 2, 2)]
+
 def buttons_shap(master,text,icon):
     buttons=Button(master,text=f"{text}\n {icon}",font=("B Nazanin",12),
                    width=12,height=5,relief=RAISED,justify="center",command=lambda t=text: new_page(t))
