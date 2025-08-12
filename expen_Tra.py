@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import webbrowser as link
+import matplotlib.pyplot as plt
 # ایجاد کردن صفحه
 window = Tk()
 title = window.title("Expense Tracker")
@@ -59,7 +60,7 @@ def new_page(text):
     second_page.title(f"{text}")
     second_page.geometry("450x600")
     label=Label(second_page,text=f"{text}",font=("B Nazanin",14)).pack(side="top")
-    if text=="جزییات حساب":
+    if text==" حساب":
         columns=("data","action","plus/minus")
         trees=ttk.Treeview(second_page,columns=columns)
         for col in columns:
@@ -89,6 +90,10 @@ def new_page(text):
 
         def open_lin():
             link.open("https://t.me/YourTelegramID")
+    elif text=="جزییات و نمودار":
+        fram_char=Frame(second_page,bg="#FFFFFF",height=300).pack(side="top",fill="x")
+        plt.pie([25,30,45],labels=["A","B","C"],autopct="%1.1f%%")
+        plt.show()
 
 
 
@@ -97,7 +102,7 @@ def new_page(text):
 
 # لیست دکمه‌ها
 boton = [
-    ("تنظیمات", "⚙️", 1, 0), ("جزییات حساب", "💳", 1, 1), ("نمودار", "📈", 1, 2),
+    ("تنظیمات", "⚙️", 1, 0), ("حساب", "💳", 1, 1), ("جزییات و نمودار", "📈", 1, 2),
     ("یادآور", "⏰", 2, 0), ("پشتیبان‌گیری", "💾", 2, 1),  ("پروفایل", "👤", 2, 2)]
 
 def buttons_shap(master,text,icon):
